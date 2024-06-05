@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+// prisma/schema.prisma
+datasource db {
+  provider  = "postgresql"
+  url  	    = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+model Users {
+  id                                     Int                     @id @default(autoincrement())
+  createdAt                              DateTime                @default(now())
+  updatedAt                              DateTime                @updatedAt
+  email                                  String                  @unique
+  username                               String                  @unique
+  author                                 String    
+  hash                                   String
+  role                                   Role                    @default(USER)
+  hashedRt                               String?
+  posts                                  Posts[]
+  comments                               Comments[]
+
+  @@map("users")
+}
+
+model Posts {
+  id                                     Int                     @id @default(autoincrement())
+  createdAt                              DateTime                @default(now())
+  updatedAt                              DateTime                @updatedAt       
+  userId                                 Int
+  role                                   Role                    @default(USER)
+  content                                String?
+  imageUrl                               String?
+  user                                   Users                   @relation(fields: [userId],references: [id], onDelete: Cascade)
+  comments                               Comments[]
+
+
+  @@map("posts")
+}
+
+model Comments {
+  id                                    Int                       @id @default(autoincrement())
+  content                               String     
+  createdAt                              DateTime                @default(now())
+  updatedAt                              DateTime                @updatedAt
+  user                                   Users                    @relation(fields: [userId],references: [id], onDelete: Cascade)
+  userId                                 Int
+  postId                                 Int                      
+  post                                   Posts                      @relation(fields: [postId],references: [id], onDelete: Cascade)
+
+  @@map("comments")
+
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+  USER
+}

@@ -6,7 +6,7 @@ import { NestExpressApplication } from '@nestjs/platform-express'
 import { join } from 'path'
 import { json } from 'express'
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule)
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, { logger: ['log', 'error', 'warn', 'debug', 'verbose'] })
   app.use(helmet())
   app.enableCors();
   app.use(json({ limit: '5mb' }))

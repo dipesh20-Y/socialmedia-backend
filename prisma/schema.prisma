@@ -30,7 +30,7 @@ model Posts {
   updatedAt                              DateTime                @updatedAt       
   userId                                 Int
   role                                   Role                    @default(USER)
-  content                                String?
+  content                                String
   imageUrl                               String?
   user                                   Users                   @relation(fields: [userId],references: [id], onDelete: Cascade)
   comments                               Comments[]

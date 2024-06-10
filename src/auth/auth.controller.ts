@@ -29,7 +29,7 @@ export class AuthController {
   @Public()
   @Post('signin')
   @HttpCode(HttpStatus.OK)
-  signin(@Body() dto: AuthDto): Promise<AuthEntities> {
+   signin(@Body() dto: AuthDto): Promise<AuthEntities> {
     return this.authService.signin(dto)
   }
 

@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
 import { UserModule } from './user/user.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [AuthModule, ConfigModule.forRoot({ isGlobal: true }), PrismaModule,
@@ -30,7 +31,8 @@ import { UserModule } from './user/user.module';
     ]),
     PostsModule,
     CommentsModule,
-    UserModule
+    UserModule,
+    ChatModule
   ],
   providers: [
     {

@@ -9,30 +9,36 @@ export class UserService{
     constructor(private prisma: PrismaService ){}
 
     async getUsers(): Promise<Users[]>{
-        return this.prisma.users.findMany()
+        return this.prisma.users.findMany(
+            // {
+            //     include:{
+            //         posts:true
+            //     }
+            // }
+        )
     }
 
     async getUserById(id:number):Promise<Users>{
         return this.prisma.users.findUnique({
-            where:{id:id}
+            where:{id:id} 
         })
     }
 
     async updateUser(id:number, dto:any){
-        const user = await this.prisma.users.findUnique({
+        const user = await this.prisma.users.findUnique({ 
             where:{id:id}
         })
 
         if (!user || user.id != id) {
             throw new ForbiddenException("Access denied")
-        }
+        } 
         return this.prisma.users.update({
             where:{id:id},
             data:{...dto}
         })
     }
 
-    async deleteProfile(authorId:number){
+    async deleteProfile(authorId:number){ 
         const user = await this.prisma.users.findUnique({
             where:{id:authorId}
         })
@@ -46,9 +52,12 @@ export class UserService{
     }
 
     async getAuthor(authorId:number){
-        console.log(authorId)
+        // console.log(authorId)
        return this.prisma.users.findUnique({
-        where:{id:authorId}
+        where:{id:authorId},
+        include:{
+            posts:true 
+        }
        })
     }
 

@@ -13,6 +13,8 @@ export class PostsService {
     return this.prisma.posts.findMany({
       include: {
         user: true,
+        comments:true,
+        likes:true
       },
     });
   }
@@ -24,7 +26,8 @@ export class PostsService {
     console.log(dto);
     return this.prisma.posts.create({
       data: {
-        content: dto.content,
+        content: dto.content, 
+        imageUrl:dto.imageUrl,
         user: {
           connect: { id: userId },
         },
@@ -37,6 +40,8 @@ export class PostsService {
       where: { id: postId },
       include: {  
         user: true,
+        comments:true,
+        likes:true
       },
     });
   }
@@ -46,7 +51,7 @@ export class PostsService {
     userId: number,
     dto: Prisma.PostsUpdateInput
   ): Promise<Posts> {
-
+ 
     console.log(postId)
     console.log(dto)
     const post = await this.prisma.posts.findUnique({

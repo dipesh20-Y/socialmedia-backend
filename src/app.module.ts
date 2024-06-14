@@ -9,6 +9,8 @@ import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
 import { UserModule } from './user/user.module';
 import { ChatModule } from './chat/chat.module';
+import { LikeModule } from './like/like.module';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [AuthModule, ConfigModule.forRoot({ isGlobal: true }), PrismaModule,
@@ -23,7 +25,7 @@ import { ChatModule } from './chat/chat.module';
         ttl: 10000,
         limit: 20,
       },
-      {
+      { 
         name: 'long',
         ttl: 60000,
         limit: 100,
@@ -32,7 +34,9 @@ import { ChatModule } from './chat/chat.module';
     PostsModule,
     CommentsModule,
     UserModule,
-    ChatModule
+    ChatModule,
+    LikeModule,
+    UploadModule
   ],
   providers: [
     {

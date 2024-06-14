@@ -10,7 +10,8 @@ export class CommentsService {
 
   constructor(private prisma: PrismaService){}
 
-  async createComment(userId:number, dto:Prisma.CommentsCreateInput, postId:number ) {
+  async createComment(userId:number, dto:Prisma.CommentsUncheckedCreateInput) {
+    
     return this.prisma.comments.create({
       data:{
         content:dto.content,
@@ -18,11 +19,11 @@ export class CommentsService {
           connect:{id:userId}
         },
         post:{
-          connect:{id:postId}
+          connect:{id:dto.postId}
         }
       }
-    })
-  }
+    })   
+  }  
 
   async getComments(){
     return this.prisma.comments.findMany({

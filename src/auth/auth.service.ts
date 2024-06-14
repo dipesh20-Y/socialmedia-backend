@@ -111,7 +111,7 @@ export class AuthService {
       },
     })
     if (!user || !user.hashedRt) {
-      throw new ForbiddenException('Access Denied')
+      throw new ForbiddenException('Access Denied')  
     }
     const refreshTokenMatches = await argon.verify(user.hashedRt, rt)
     if (!refreshTokenMatches) {

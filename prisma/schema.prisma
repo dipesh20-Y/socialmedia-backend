@@ -20,6 +20,7 @@ model Users {
   hashedRt                               String?
   posts                                  Posts[]
   comments                               Comments[]
+  likes                                  Likes[]
 
   @@map("users")
 }
@@ -34,7 +35,7 @@ model Posts {
   imageUrl                               String?
   user                                   Users                   @relation(fields: [userId],references: [id], onDelete: Cascade)
   comments                               Comments[]
-
+  likes                                  Likes[]
 
   @@map("posts")
 }
@@ -49,8 +50,19 @@ model Comments {
   postId                                 Int                      
   post                                   Posts                      @relation(fields: [postId],references: [id], onDelete: Cascade)
 
-  @@map("comments")
+  @@map("comments") 
 
+}
+
+model Likes {
+  id                  Int      @id @default(autoincrement())
+  user                Users     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId              Int
+  post                Posts     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId              Int
+  createdAt           DateTime @default(now())
+  @@unique([userId, postId])
+  @@map("likes")
 }
 
 enum Role {
@@ -58,3 +70,4 @@ enum Role {
   EDITOR
   USER
 }
+   

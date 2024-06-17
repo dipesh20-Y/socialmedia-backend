@@ -1,6 +1,7 @@
-import { Controller, Delete, Get, Param, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Put } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { GetCurrentUserId, Public } from "src/auth/decorator";
+import { Prisma } from "@prisma/client";
 
 
 @Controller('api/users')
@@ -23,15 +24,16 @@ export class UserController{
         return this.userService.getUserById(id)
     }
 
-    @Put(':id')
-    updateUser(@Param('id') id:number, dto:any){
-        return this.userService.updateUser(id, dto)
+    @Put('update')
+    updateUser(@GetCurrentUserId() userId:number, @Body() dto:Prisma.UsersUpdateInput){
+        console.log('user info controller', userId, dto.username)
+        return this.userService.updateUser(userId, dto)
     }
-
+ 
     @Delete('delete')
     deleteProfile(@GetCurrentUserId() authorId: number){
         return this.userService.deleteProfile(authorId)
     }
-
-
-}
+  
+   
+} 

@@ -14,7 +14,8 @@ model Users {
   updatedAt                              DateTime                @updatedAt
   email                                  String                  @unique
   username                               String                  @unique
-  author                                 String    
+  author                                 String
+  profilePicUrl                          String?    
   hash                                   String
   role                                   Role                    @default(USER)
   hashedRt                               String?

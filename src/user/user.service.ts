@@ -24,18 +24,22 @@ export class UserService{
         })
     }
 
-    async updateUser(id:number, dto:any){
+    async updateUser(userId:number, dto:Prisma.UsersUpdateInput){
+
+        console.log('update user info', dto)
         const user = await this.prisma.users.findUnique({ 
-            where:{id:id}
+            where:{id:userId}
         })
 
-        if (!user || user.id != id) {
-            throw new ForbiddenException("Access denied")
-        } 
+        if (!user) {
+            throw new ForbiddenException("No such user exists")
+        } else if(user.id != userId){
+            throw new ForbiddenException('No access')
+        }
         return this.prisma.users.update({
-            where:{id:id},
+            where:{id:userId},
             data:{...dto}
-        })
+        }) 
     }
 
     async deleteProfile(authorId:number){ 

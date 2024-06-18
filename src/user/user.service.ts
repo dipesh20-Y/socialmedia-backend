@@ -18,9 +18,9 @@ export class UserService{
         )
     }
 
-    async getUserById(id:number):Promise<Users>{
+    async getUserById(userId:number):Promise<Users>{
         return this.prisma.users.findUnique({
-            where:{id:id} 
+            where:{id:userId} 
         })
     }
 
